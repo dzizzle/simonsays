@@ -19,7 +19,7 @@ const $strictButton = $("#strict");
 const $onButton = $("#on");
 const $startButton = $("#go");
 
-$strictButton.on('click', function() {
+$strictButton.on('click', (event) => {
   if ($strictButton.checked == true) {
     strict = true;
   } else {
@@ -27,19 +27,19 @@ $strictButton.on('click', function() {
   }
 });
 
-$onButton.on('click', function () {
+$onButton.on('click', (event) => {
   if ($onButton.checked == true) {
     on = true;
-    $turnCounter.html("-");
+    $turnCounter.text("-");
   } else {
     on = false;
-    $turnCounter.html("");
+    $turnCounter.text("");
     clearColor();
     clearInterval(intervalId);
   }
 });
 
-$startButton.on('click', function () {
+$startButton.on('click', (event) => {
   if (on || win) {
     play();
   }
@@ -86,55 +86,55 @@ function gameTurn() {
 
 function one() {
   if (noise) {
-    let audio = $("clip1");
+    let audio = $("sound1");
     audio.play();
   }
   noise = true;
-  $topLeft.css({backgroundColor: "purple"});
+  $topLeft.css('background-color',"purple");
 }
 
 function two() {
   if (noise) {
-    let audio = $("clip2");
+    let audio = $("sound2");
     audio.play();
   }
   noise = true;
-  $topRight.css({backgroundColor: "red"});
+  $topRight.css('background-color', "red");
 }
 
 function three() {
   if (noise) {
-    let audio = $("clip3");
+    let audio = $("sound3");
     audio.play();
   }
   noise = true;
-  $bottomLeft.css({backgroundColor: "green"});
+  $bottomLeft.css('background-color',"green");
 }
 
 function four() {
   if (noise) {
-    let audio = $("clip4");
+    let audio = $("sound4");
     audio.play();
   }
   noise = true;
-  $bottomRight.css({backgroundColor: "blue"});
+  $bottomRight.css('background-color', "blue");
 }
 
 function clearColor() {
-  $topLeft.css({backgroundColor:"#dbbad1"});
-  $topRight.css({backgroundColor: "#EA6964"});
-  $bottomLeft.css({backgroundColor:"#81CB71"});
-  $bottomRight.css({backgroundColor:"#98DAF1"});
+  $topLeft.css('background-color',"#dbbad1");
+  $topRight.css('background-color', "#EA6964");
+  $bottomLeft.css('background-color',"#81CB71");
+  $bottomRight.css('background-color',"#98DAF1");
 }
 
 function flashColor() {
-  $topLeft.css({backgroundColor: "#dbbad1"});
-  $topRight.css({backgroundColor: "#EA6964"});
-  $bottomLeft.css({backgroundColor: "#81CB71"});
-  $bottomRight.css({backgroundColor: "#98DAF1"});
+  $topLeft.css('background-color', "#dbbad1");
+  $topRight.css('background-color',"#EA6964");
+  $bottomLeft.css('background-color', "#81CB71");
+  $bottomRight.css('background-color',"#98DAF1");
 }
 
-$topLeft.on('click',function (event) {
+$topLeft.on('click',(event) => {
   if (on) {
     playerOrder.push(1);
     check();
@@ -147,7 +147,7 @@ $topLeft.on('click',function (event) {
   }
 })
 
-$topRight.on('click',function(event) {
+$topRight.on('click',(event) => {
   if (on) {
     playerOrder.push(2);
     check();
@@ -160,7 +160,7 @@ $topRight.on('click',function(event) {
   }
 })
 
-$bottomLeft.on('click',function (event) {
+$bottomLeft.on('click', (event) => {
   if (on) {
     playerOrder.push(3);
     check();
@@ -173,7 +173,7 @@ $bottomLeft.on('click',function (event) {
   }
 })
 
-$bottomRight.on('click',function (event) {
+$bottomRight.on('click',(event)=> {
   if (on) {
     playerOrder.push(4);
     check();
@@ -196,9 +196,9 @@ function check() {
 
   if (good == false) {
     flashColor();
-    turnCounter.innerHTML = "NO!";
+    $turnCounter.text("NO!");
     setTimeout(() => {
-      turnCounter.innerHTML = turn;
+      $turnCounter.text(turn);
       clearColor();
 
       if (strict) {
@@ -220,7 +220,7 @@ function check() {
     playerOrder = [];
     compTurn = true;
     flash = 0;
-    $turnCounter.html(turn);
+    $turnCounter.text(turn);
     intervalId = setInterval(gameTurn, 800);
   }
 
@@ -228,8 +228,7 @@ function check() {
 
 function winGame() {
   flashColor();
-  turnCounter.html("WIN!");
+  $turnCounter.text("WIN!");
   on = false;
   win = true;
 }
-
