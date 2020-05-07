@@ -9,6 +9,7 @@ let strict = false;
 let noise = true;
 let on = false;
 let win;
+let welcome =prompt("Welcome to the Powerpuff Challenge! It looks like the girls need some help with their homework...help the Powerpuff Girls by repeating what the keypad plays to you!");
 
 const turnCounter = document.querySelector("#turn");
 const topLeft = document.querySelector("#topleft");
@@ -19,6 +20,7 @@ const strictButton = document.querySelector("#strict");
 const onButton = document.querySelector("#on");
 const startButton = document.querySelector("#go");
 
+//check if the strict button is checked 
 strictButton.addEventListener('click', (event) => {
   if (strictButton.checked == true) {
     strict = true;
@@ -27,6 +29,7 @@ strictButton.addEventListener('click', (event) => {
   }
 });
 
+//check to see if the on button is selected, turn counter shows what is in box 
 onButton.addEventListener('click', (event) => {
   if (onButton.checked == true) {
     on = true;
@@ -34,16 +37,19 @@ onButton.addEventListener('click', (event) => {
     on = false;
     turnCounter.innerHTML = "";
     clearColor();
+    //stops running game turn function when you clear 
     clearInterval(intervalId);
   }
 });
 
+//check to see if the start button is on (equals true)or when win equals true, then run play function 
 startButton.addEventListener('click', (event) => {
   if (on || win) {
     play();
   }
 });
 
+//order gets random number between 1 and 4, math.random gets decimal, multiply by 4 for whole number then you add 1 (will return random array 1-4)
 function play() {
   win = false;
   order = [];
@@ -57,22 +63,23 @@ function play() {
     order.push(Math.floor(Math.random() * 4) + 1);
   }
   compTurn = true;
-
+  //runs game turn function every 800 miliseconds 
   intervalId = setInterval(gameTurn, 800);
 }
 
 function gameTurn() {
   on = false;
-
+//if computer's turn is over then clear interval, clear color and player can now press buttons bc on is true
   if (flash == turn) {
     clearInterval(intervalId);
     compTurn = false;
     clearColor();
     on = true;
   }
-
+//set timeout function will run function only after a certain amount of miliseconds, it will flash a color 
   if (compTurn) {
     clearColor();
+    //if first number in flash array is 1 then run one function etc
     setTimeout(() => {
       if (order[flash] == 1) one();
       if (order[flash] == 2) two();
@@ -119,6 +126,7 @@ function four() {
   bottomRight.style.backgroundColor = "blue";
 }
 
+//clear color brings color back to original state before flash
 function clearColor() {
   topLeft.style.backgroundColor = "#dbbad1";
   topRight.style.backgroundColor = "#EA6964";
